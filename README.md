@@ -17,3 +17,7 @@ This then pretifies the quantities into a csv named `inventory_output.csv` which
 I copy and paste these values into another sheet where I reference csv export that I get from https://gear.swgohevents.com/. Then I can compare how many I am missing with how many are required.
 
 I will update this README with a link to my Google Sheet I use for tracking soon. Feel free to reach out if you would like access to that sheet for tracking purposes. 
+
+## Comlink
+I am also referencing the [SWGOH Comlink API](https://github.com/swgoh-utils/swgoh-comlink) to check my roster's current star count so that I can calculate how many shards I have left on my spreadsheet. A valid API Url is needed for checking that on line 24
+``` url = "" ```

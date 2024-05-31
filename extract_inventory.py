@@ -1,12 +1,17 @@
 import json
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+COMLINK_API = os.getenv('COMLINK_API')
+INVENTORY_FILE = os.getenv('INVENTORY_FILE') # pulled from C3PO bot
 
 # Load inventory and localization files
-inventory_file = '' # 311527188-inventory.json pulled from C3PO bot
 localization_file = 'Loc_ENG_US.txt.json'
 output_file = 'inventory_output.csv'
 
-with open(inventory_file, 'r', encoding='utf-8') as inv_file:
+with open(INVENTORY_FILE, 'r', encoding='utf-8') as inv_file:
     inventory_data = json.load(inv_file)
 
 with open(localization_file, 'r', encoding='utf-8') as loc_file:
@@ -21,7 +26,7 @@ localization = localization_data['data']
 output_lines = []
 
 def fetch_player_data(ally_code):
-    url = "" # ComLink URL
+    url = COMLINK_API + "/player" # ComLink URL
     payload = {
         "payload": {
             "allyCode": ally_code
