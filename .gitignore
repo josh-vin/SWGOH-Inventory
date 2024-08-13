@@ -163,3 +163,7 @@ cython_debug/
 
 *-inventory.json
 inventory_output.csv
+
+*.csv
+
+*.json

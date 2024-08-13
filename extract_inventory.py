@@ -24,6 +24,7 @@ ally_code = inventory_data['allyCode']
 localization = localization_data['data']
 # Prepare the output
 output_lines = []
+json_data = []
 
 def fetch_player_data(ally_code):
     url = COMLINK_API + "/player" # ComLink URL
@@ -70,6 +71,11 @@ for item in equipment:
     output_line = f"\"{item_name}\", \"{quantity}\""
     output_lines.append(output_line)
 
+    json_data.append({
+            "item_name": item_name,
+            "quantity": quantity
+        })
+
 # Process materials
 for item in materials:
     item_id = item['id']
@@ -80,10 +86,19 @@ for item in materials:
         loc_key = f"UNIT_{unit_key}_NAME".upper()
         star_count = unit_stars.get(unit_key, 0)
         output_line = f"\"{localization.get(loc_key, loc_key)}\", \"{star_count};{quantity}\""
+        json_data.append({
+            "item_name": item_name,
+            "star_count": star_count,
+            "quantity": quantity
+        })
     else:
         loc_key = f"{item_id}_NAME"
         item_name = localization.get(loc_key, loc_key)
         output_line = f"\"{item_name}\", \"{quantity}\""
+        json_data.append({
+            "item_name": item_name,
+            "quantity": quantity
+        })
 
     # Format the output line
     output_lines.append(output_line)
@@ -93,4 +108,10 @@ with open(output_file, 'w', encoding='utf-8') as out_file:
     for line in output_lines:
         out_file.write(line + '\n')
 
+# Write the JSON data to a file
+json_output_file = 'output_data.json'
+with open(json_output_file, 'w', encoding='utf-8') as json_file:
+    json.dump(json_data, json_file, indent=4, ensure_ascii=False)
+
 print(f"Output written to {output_file}")
+print(f"Json Output written to {json_output_file}")
